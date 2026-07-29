@@ -12,7 +12,11 @@ typedef signed long s32;
 typedef signed long long s64;
 
 typedef float f32;
-typedef double f64;
+
+/* Only available on gcc version >= 10.5 */
+#if (__GNUC__ >= 10 && __GNUC_MINOR__ >= 5)
+typedef long double f64;
+#endif
 
 //for port/pin direction
 #define OUTPUT 1
