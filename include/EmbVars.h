@@ -18,6 +18,16 @@ typedef float f32;
 typedef long double f64;
 #endif
 
+_Static_assert(sizeof(u8) == 1, "sizeof(u/s8) != 1");
+_Static_assert(sizeof(u16) == 2, "sizeof(u/s16) != 2");
+_Static_assert(sizeof(u32) == 4, "sizeof(u/s32) != 4");
+_Static_assert(sizeof(u64) == 8, "sizeof(u/s64) != 8");
+
+_Static_assert(sizeof(f32) == 4, "sizeof(f32) != 4");
+#if (__GNUC__ >= 10 && __GNUC_MINOR__ >= 5)
+_Static_assert(sizeof(f64) == 8, "sizeof(f64) != 8");
+#endif
+
 //for port/pin direction
 #define OUTPUT 1
 #define INPUT 0
