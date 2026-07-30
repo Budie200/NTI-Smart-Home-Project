@@ -13,6 +13,11 @@ typedef signed long long s64;
 
 typedef float f32;
 
+typedef _Bool bool;
+
+#define true 1
+#define false 0
+
 /* Only available on gcc version >= 10.5 */
 #if (__GNUC__ >= 10 && __GNUC_MINOR__ >= 5)
 typedef long double f64;
