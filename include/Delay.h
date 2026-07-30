@@ -1,7 +1,7 @@
 #ifndef DELAY_H
 #define DELAY_H
 
-void Delay_us(u32 t);
-void Delay_ms(u16 t);
+#define Delay_us(t)	__builtin_avr_delay_cycles(t)
+#define Delay_ms(t)	Delay_us(t * 1000ul)
 
 #endif
