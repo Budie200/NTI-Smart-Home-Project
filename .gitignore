@@ -2,4 +2,5 @@
 .cache
 compile_commands.json
 Makefile
+toolchain.mk
 .vscode
