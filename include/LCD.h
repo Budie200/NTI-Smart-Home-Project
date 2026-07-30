@@ -10,11 +10,11 @@ typedef struct{
     u8 E;
 } LCD_Config;
 
-void LCD_Pulse(LCD_Config *lcd);
-void LCD_SendCommand(LCD_Config *lcd , u8 command);
-void LCD_Init(LCD_Config *lcd); // allow options for init later
-void LCD_Char(LCD_Config *lcd, u8 letter);
-void LCD_String(LCD_Config *lcd, const u8* letters);
-void LCD_Clear(LCD_Config *lcd);
+void LCD_Pulse(const LCD_Config *lcd);
+void LCD_SendCommand(const LCD_Config *lcd , u8 command);
+void LCD_Init(const LCD_Config *lcd); // allow options for init later
+void LCD_Char(const LCD_Config *lcd, u8 letter);
+void LCD_String(const LCD_Config *lcd, const u8* letters);
+void LCD_Clear(const LCD_Config *lcd);
 
 #endif
