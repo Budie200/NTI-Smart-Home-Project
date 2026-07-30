@@ -1,6 +1,5 @@
 #ifndef LCD_H
 #define LCD_H
-#include "EmbVars.h"
 
 typedef struct{
     u8 DataPort;
