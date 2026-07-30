@@ -1,111 +1,38 @@
-#define F_CPU 1000000UL
+#include "EmbVars.h"
+#include "bitwise_ops.h"
+#include "DIO.h"
+#include "ADC.h"
+#include "Delay.h"
 
-#include <avr/io.h>
-#include <util/delay.h>
+/* Loads on PORTC (port 3) - all pins output */
+#define LEDS_Port         3
+#define LivingRoomLight   0
+#define BedroomLight      1
+#define Fan                2
 
-int main(void)
-{
-    unsigned int temperatureADC;
-    unsigned int lightADC;
-    unsigned int temperature;
+#define LDR_Channel 1
 
+int main(void){
+	DIO_SetPortDirection(LEDS_Port, OUTPUT);
+	DIO_SetPortValue(LEDS_Port, 0x00);   // all loads off at start
 
-    // ================= PORT CONFIGURATION =================
+	ADC_Init();
 
-    // PORTC all output
-    DDRC = 0b11111111;
+	while(1){
+		s32 temperature = ADC_ReadTemperature();
+		u16 light_level = ADC_Read(LDR_Channel);
 
-    // PORTA all input
-    DDRA = 0b00000000;
+		if(temperature > 30)
+			DIO_SetPinValue(LEDS_Port, Fan, HIGH);
+		else
+			DIO_SetPinValue(LEDS_Port, Fan, LOW);
 
+		if(light_level < 300)
+			DIO_SetPinValue(LEDS_Port, LivingRoomLight, HIGH);
+		else
+			DIO_SetPinValue(LEDS_Port, LivingRoomLight, LOW);
 
-    // ================= ADC CONFIGURATION =================
-
-    // AVCC as reference voltage
-    // ADC0 selected
-    ADMUX = 0b01000000;
-
-    // Enable ADC
-    // Prescaler = 8
-    ADCSRA = 0b10000111;
-
-
-    // ================= MAIN LOOP =================
-
-    while(1)
-    {
-        // Select ADC0
-        ADMUX = 0b01000000;
-
-        // Start ADC conversion
-        ADCSRA = ADCSRA | 0b01000000;
-
-        // Wait until conversion finishes
-        while((ADCSRA & 0b00010000) == 0)
-        {
-        }
-
-        // Read ADC result
-        temperatureADC = ADCL;
-
-        temperatureADC = temperatureADC |
-                         (ADCH << 8);
-
-        // Clear ADC flag
-        ADCSRA = ADCSRA | 0b00010000;
-
-
-        // Convert ADC value to Celsius
-        temperature = (temperatureADC * 500UL) / 1024;
-        // Select ADC1
-        ADMUX = 0b01000001;
-
-        // Start ADC conversion
-        ADCSRA = ADCSRA | 0b01000000;
-
-        // Wait until conversion finishes
-        while((ADCSRA & 0b00010000) == 0)
-        {
-        }
-
-        // Read ADC result
-        lightADC = ADCL;
-
-        lightADC = lightADC |
-                   (ADCH << 8);
-
-        // Clear ADC flag
-        ADCSRA = ADCSRA | 0b00010000;
-      
-        if(temperature >= 30)
-        {
-            PORTC = PORTC | 0b00000100;
-        }
-
-        else
-        {
-            PORTC = PORTC & 0b11111011;
-        }
-
-        if(lightADC < 400)
-        {
-            // Living Room Light ON
-            PORTC = PORTC | 0b00000001;
-
-            // Bedroom Light ON
-            PORTC = PORTC | 0b00000010;
-        }
-
-        else
-        {
-            // Living Room Light OFF
-            PORTC = PORTC & 0b11111110;
-
-            // Bedroom Light OFF
-            PORTC = PORTC & 0b11111101;
-        }
-
-
-        _delay_ms(500);
-    }
+		Delay_ms(500);
+	}
 }
+
