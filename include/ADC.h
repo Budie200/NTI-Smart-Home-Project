@@ -1,7 +1,18 @@
 #ifndef ADC_H
 #define ADC_H
 
-#include "EmbVars.h"
+#define ADCL	(*(volatile u8 *)0x24)
+
+#define ADCH	(*(volatile u8 *)0x25)
+
+#define ADCSRA	(*(volatile u8 *)0x26)
+#define ADCSRA_ADPS0	0
+#define ADCSRA_ADPS1	1
+#define ADCSRA_ADSC	6
+#define ADCSRA_ADEN	7
+
+#define ADMUX	(*(volatile u8 *)0x27)
+#define ADMUX_REFS0	6
 
 void ADC_Init(void);
 
