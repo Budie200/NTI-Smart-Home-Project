@@ -93,3 +93,5 @@ const u8 *LCD_s64_to_str(s64 val) {
         
     return &str[i];
 }
+    return &str[i];
+}
