@@ -12,8 +12,8 @@ CPU Frequency is built around  a speed of *1 MHZ*
 
 ## Drivers
 - [ ] Timer /Abdullah
-- [ ] ADC  /Khalifa
-- [ ] UART /Khalifa
+- [X] ADC  /Khalifa
+- [X] UART /Khalifa
 
 ## Hardware
 - [X] Draft Circuit Schematic 
@@ -21,7 +21,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [ ] Finish Proteus Schematic /Ismail
 
 ## Hardware & Software
-- [ ] DIO: AVR2(LEDs for living room light, bedroom light, and fan); AVR1(buzzer for alarms). /Haneen
+- [X] DIO: AVR2(LEDs for living room light, bedroom light, and fan); AVR1(buzzer for alarms). /Haneen
 - [ ] LCD: Display temperature, light status, fan status, door status, and system mode. /Tamer
 - [ ] Keypad: Navigate menus, and manually control appliances. /Abdullah
 - [ ] Timers: Use for buzzer timing, LED blinking, periodic sensor sampling, or a software clock. /Abdullah
