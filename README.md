@@ -5,7 +5,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 
 ## Deliverables
 - [X] Set up repository 
-- [ ] Circuit Schematic /everyone
+- [X] Circuit Schematic /everyone
 - [ ] Simulation /everyone
 - [ ] 5 Minute Demonstration Video /undecided
 - [ ] Report /everyone 
@@ -35,7 +35,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [ ] Interrupts: Use for a doorbell, motion sensor, or emergency button; display a message and activate the buzzer. /Tamer
 - [ ] System Modes: Manual Mode: Appliances are controlled using the keypad or UART.  <br>
 Automatic Mode: Fan and lights are controlled automatically according to sensor readings. /Khalifa
-- [ ] Password System: Default password: 1234. <br>
+- [X] Password System: Default password: 1234. <br>
 Three incorrect attempts activate the buzzer and display "ACCESS DENIED". /Haneen
 
 
