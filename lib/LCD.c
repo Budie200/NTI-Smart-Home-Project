@@ -62,3 +62,34 @@ void LCD_Clear(const LCD_Config *lcd){
 	LCD_Pulse(lcd);
 	Delay_ms(2);
 }
+
+const u8 *LCD_s64_to_str(s64 val) {
+    static u8 str[LCD_WIDTH];
+    bool neg = false;
+    s8 i;
+    
+    str[LCD_WIDTH - 1] = '\0';
+    if (val < 0) {
+        val = -val;
+        neg = true;
+    } else if (val == 0) {
+        str[LCD_WIDTH - 2] = '0';
+        return &str[LCD_WIDTH - 2];
+    }
+    
+    for (i = LCD_WIDTH - 2; val != 0 && i >= 0; val /= 10)
+        str[i--] = val % 10 + '0';
+    
+    if (i < 0 && val != 0)
+        return NULL;
+    
+    if (neg) {
+        if (i < 0)
+            return NULL;
+        
+        str[i] = '-';
+    } else
+        i++;
+        
+    return &str[i];
+}

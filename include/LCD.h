@@ -16,5 +16,8 @@ void LCD_Init(const LCD_Config *lcd); // allow options for init later
 void LCD_Char(const LCD_Config *lcd, u8 letter);
 void LCD_String(const LCD_Config *lcd, const u8* letters);
 void LCD_Clear(const LCD_Config *lcd);
+const u8 *LCD_s64_to_str(s64 val);
+
+#define LCD_WIDTH 16
 
 #endif
