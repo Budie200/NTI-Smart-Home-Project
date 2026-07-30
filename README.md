@@ -30,7 +30,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 
 ## Software
 - [ ] Add int to string converion for an LCD
-- [ ] delay_ms & delay_us
+- [X] delay_ms & delay_us
 - [ ] Interrupts: Use for a doorbell, motion sensor, or emergency button; display a message and activate the buzzer.
 - [ ] System Modes: Manual Mode: Appliances are controlled using the keypad or UART. <br>
 Automatic Mode: Fan and lights are controlled automatically according to sensor readings.
