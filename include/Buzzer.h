@@ -1,8 +1,6 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
-#include "EmbVars.h"
-
 #define BUZZER_Port 3
 #define BUZZER_Pin  0
 
