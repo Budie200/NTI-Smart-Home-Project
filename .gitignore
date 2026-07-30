@@ -4,3 +4,4 @@ compile_commands.json
 Makefile
 toolchain.mk
 .vscode
+circuit.png
