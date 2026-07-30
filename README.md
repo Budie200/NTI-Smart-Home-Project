@@ -29,7 +29,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [ ] UART: Support commands: LIGHT1 ON/OFF, FAN ON/OFF, STATUS, AUTO, MANUAL. /Khalifa 
 
 ## Software
-- [ ] Add int to string converion for an LCD /Abdullah
+- [X] Add int to string conversion for an LCD /Abdullah
 - [X] delay_ms & delay_us
 - [ ] Interrupts: Use for a doorbell, motion sensor, or emergency button; display a message and activate the buzzer. /Tamer
 - [ ] System Modes: Manual Mode: Appliances are controlled using the keypad or UART.  <br>
