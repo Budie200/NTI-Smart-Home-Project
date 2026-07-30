@@ -25,15 +25,15 @@ void LCD_SendCommand(const LCD_Config *lcd, u8 command){
 // allow options for init later
 void LCD_Init(const LCD_Config *lcd){
 	Delay_ms(50);
-	LCD_SendCommand(lcd, 0b00111000);
+	LCD_SendCommand(lcd, LCD_CMD_FUNCSET(1, 1, 0));
 	Delay_us(40);
-	LCD_SendCommand(lcd, 0b00111000);
+	LCD_SendCommand(lcd, LCD_CMD_FUNCSET(1, 1, 0));
 	Delay_us(40);
-	LCD_SendCommand(lcd, 0b00001111);
+	LCD_SendCommand(lcd, LCD_CMD_DISPLAYCTRL(1, 1, 1));
 	Delay_us(40);
-	LCD_SendCommand(lcd, 0b00000001);
+	LCD_SendCommand(lcd, LCD_CMD_CLEARSCREEN);
 	Delay_ms(2);
-	LCD_SendCommand(lcd, 0b00000110);
+	LCD_SendCommand(lcd, LCD_CMD_ENTRYMODE(1, 0));
 }
 
 void LCD_Char(const LCD_Config *lcd, u8 letter){
@@ -53,14 +53,7 @@ void LCD_String(const LCD_Config *lcd, const u8* letters){
 }
 
 void LCD_Clear(const LCD_Config *lcd){
-	DIO_SetPinValue(lcd->CtrlPort, lcd->Rs, 0);
-	DIO_SetPinValue(lcd->CtrlPort, lcd->Rw, 0);
-	DIO_SetPinValue(lcd->CtrlPort, lcd->E, 0);
-
-	DIO_SetPortValue(lcd->DataPort, 0b00000001);
-
-	LCD_Pulse(lcd);
-	Delay_ms(2);
+	LCD_SendCommand(lcd, LCD_CMD_CLEARSCREEN);
 }
 
 const u8 *LCD_s64_to_str(s64 val) {
@@ -91,7 +84,5 @@ const u8 *LCD_s64_to_str(s64 val) {
     } else
         i++;
         
-    return &str[i];
-}
     return &str[i];
 }
