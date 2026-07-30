@@ -98,7 +98,7 @@ int main(void){
 			if(wrong_attempts >= 3){
 				LCD_Clear(&lcd);
 				LCD_String(&lcd, (const u8*)"ACCESS DENIED");
-				Buzzer_Alarm();
+				Buzzer_On();
 				wrong_attempts = 0;
 				Delay_ms(1000);
 			}
