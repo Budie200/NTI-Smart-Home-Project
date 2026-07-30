@@ -28,6 +28,8 @@ _Static_assert(sizeof(f32) == 4, "sizeof(f32) != 4");
 _Static_assert(sizeof(f64) == 8, "sizeof(f64) != 8");
 #endif
 
+#define NULL ((void*) 0)
+
 //for port/pin direction
 #define OUTPUT 1
 #define INPUT 0
