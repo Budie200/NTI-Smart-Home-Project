@@ -1,6 +1,6 @@
 #ifndef KEYPAD_H
 #define KEYPAD_H
-
+#include "EmbVars.h"
 /*
 Trying a different approach with this compared to the LCD.
 Instead of defining the pins as values in a struct, which uses more memory 
