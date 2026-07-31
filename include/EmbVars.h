@@ -63,4 +63,8 @@ _Static_assert(sizeof(f64) == 8, "sizeof(f64) != 8");
 #define PORTD (*(volatile u8*) 0x32)
 #define PIND (*(volatile u8*) 0x30)
 
+#define MCUCR (*(volatile u8*) 0x55)
+#define GICR (*(volatile u8*) 0x5b)
+#define SREG (*(volatile u8*) 0x5f)
+
 #endif
