@@ -1,0 +1,35 @@
+#ifndef _INTERRUPT_H_
+#define _INTERRUPT_H_
+
+#define INTR_NVECTORS	21
+
+enum Intr_Vec {
+	INTR_VEC_RESET,
+	INTR_VEC_INT0,
+	INTR_VEC_INT1,
+	INTR_VEC_INT2,
+	INTR_VEC_TIMER2_COMP,
+	INTR_VEC_TIMER2_OVF,
+	INTR_VEC_TIMER1_CAPT,
+	INTR_VEC_TIMER1_COMPA,
+	INTR_VEC_TIMER1_COMPB,
+	INTR_VEC_TIMER1_OVF,
+	INTR_VEC_TIMER0_COMP,
+	INTR_VEC_TIMER0_OVF,
+	INTR_VEC_SPI_STC,
+	INTR_VEC_USART_RXC,
+	INTR_VEC_USART_UDRE,
+	INTR_VEC_USART_TXC,
+	INTR_VEC_ADC,
+	INTR_VEC_EE_RDY,
+	INTR_VEC_ANA_COMP,
+	INTR_VEC_TWI,
+	INTR_VEC_SPM_RDY
+};
+
+#define INTR_FUNC_TYPE(n)	__attribute__((signal)) void (*n)(void)
+#define INTR_FUNC(n)	__attribute__((signal, used)) void n(void)
+
+void Intr_Register(enum Intr_Vec vec, INTR_FUNC_TYPE(func));
+
+#endif
