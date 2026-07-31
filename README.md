@@ -11,7 +11,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [ ] Report /everyone 
 
 ## Drivers
-- [ ] Timer /Abdullah
+- [X] Timer /Abdullah
 - [X] ADC  /Khalifa
 - [X] UART /Khalifa
 - [X] Interrupt vector(s) /Khalifa
