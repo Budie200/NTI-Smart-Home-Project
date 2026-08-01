@@ -19,8 +19,8 @@ CPU Frequency is built around  a speed of *1 MHZ*
 
 ## Hardware
 - [X] Draft Circuit Schematic 
-- [ ] Use transistors for something /Ismail
-- [ ] Finish Proteus Schematic /Ismail
+- [X] Use transistors for something /Ismail
+- [X] Finish Proteus Schematic /Ismail
 
 ## Hardware & Software
 - [X] DIO: AVR2(LEDs for living room light, bedroom light, and fan); AVR1(buzzer for alarms). /Haneen
