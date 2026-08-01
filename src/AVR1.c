@@ -14,11 +14,11 @@
    Data bus (8-bit)  -> PORTB (port 2)   [Keypad already owns PORTA]
    Control (RS,RW,E) -> PORTD (port 4), pins 0,1,2
    --------------------------------------------------------------- */
-#define LCD_DataPort 2
+#define LCD_DataPort 3
 #define LCD_CtrlPort 4
-#define LCD_RS_Pin   0
-#define LCD_RW_Pin   1
-#define LCD_E_Pin    2
+#define LCD_RS_Pin   5
+#define LCD_RW_Pin   6
+#define LCD_E_Pin    7
 
 static const LCD_Config lcd = {
 	.DataPort = LCD_DataPort,
