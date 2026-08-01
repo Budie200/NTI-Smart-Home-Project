@@ -43,4 +43,4 @@ Three incorrect attempts activate the buzzer and display "ACCESS DENIED". /Hanee
 
 ## Bonus
 - [ ] EEPROM to save password and mode /Khalifa
-- [ ] servo motor for a door /Haneen
+- [ ] servo motor for a door /Abdullah
