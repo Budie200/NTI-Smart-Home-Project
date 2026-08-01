@@ -39,7 +39,5 @@ Automatic Mode: Fan and lights are controlled automatically according to sensor 
 - [X] Password System: Default password: 1234. <br>
 Three incorrect attempts activate the buzzer and display "ACCESS DENIED". /Haneen
 
-
-
 ## Bonus
 - [ ] EEPROM to save password and mode /Khalifa

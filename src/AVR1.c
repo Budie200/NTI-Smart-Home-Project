@@ -26,11 +26,6 @@ static const LCD_Config lcd = {
 	.E  = LCD_E_Pin
 };
 
-static const u8 correct_password[5] = "1234";
-static u8 entered_password[5];
-static u8 wrong_attempts = 0;
-
-
 int main(void){
 	/* LCD_Init() does NOT set pin directions itself, so we must
 	   configure the data port and control pins as OUTPUT first */
@@ -45,32 +40,7 @@ int main(void){
 	Menu_init(&lcd);
 	
 	while(1){
-		if(Check_Password()){
-			LCD_Clear(&lcd);
-			LCD_String(&lcd, (const u8*)"ACCESS GRANTED");
-			wrong_attempts = 0;
-			Delay_ms(2000);
 
-			/* team can hook the appliance-control menu in here */
-		}
-		else{
-			wrong_attempts++;
-
-			if(wrong_attempts >= 3){
-				LCD_Clear(&lcd);
-				LCD_String(&lcd, (const u8*)"ACCESS DENIED");
-				Buzzer_On();
-				wrong_attempts = 0;
-				Delay_ms(1000);
-			}
-			else{
-				LCD_Clear(&lcd);
-				LCD_String(&lcd, (const u8*)"Wrong Password");
-				LCD_SendCommand(&lcd, 0xC0);
-				LCD_String(&lcd, (const u8*)"Try Again");
-				Delay_ms(1500);
-			}
-		}
 	}
 }
 
