@@ -66,6 +66,8 @@ int main(void){
 	set_bit(SREG, SREG_INTREN);
 	Menu_init(&lcd);
 
+	Menu_Password(&lcd);
 	while(1) {
+		Menu_Loop(&lcd);
 	}
 }
