@@ -29,8 +29,8 @@ void USART_Init(u16 baud_rate, bool txen, bool rxen) {
 	/* Set TXEN and RXEN. */
 	UCSRB |= (txen ? bit(UCSRB_TXEN) : 0) | (rxen ? bit(UCSRB_RXEN) : 0);
 
-	/* 8-bit character size, 1 stop bit. */
-	Write_URSEL(SEL_UCSRC, bit(UCSRC_UCSZ0) | bit(UCSRC_UCSZ1));
+	/* Synchronous 8-bit character size, 1 stop bit. */
+	Write_URSEL(SEL_UCSRC, bit(UCSRC_UCSZ0) | bit(UCSRC_UCSZ1) | bit(UCSRC_UMSEL));
 }
 
 void USART_Write(u16 len, u8 *buf) {
