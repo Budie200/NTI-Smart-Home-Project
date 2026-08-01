@@ -17,7 +17,7 @@ INTR_FUNC(func){
     TCNT0 = 11;
 }
 
-void Timer_init(void){
+void Timer_Init(void){
     TCCR0 = bit(TCCR0_CS00) | bit(TCCR0_CS02);
     TIMSK = bit(TIMSK_TOIE0);
     TCNT0 = 11;

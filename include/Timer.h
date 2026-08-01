@@ -14,7 +14,7 @@
 #define TIFR *((volatile u8*) 0x58)
 #define TIFR_T0VO 0
 
-void Timer_init(void);
+void Timer_Init(void);
 u32 Timer_GetSeconds(void);
 
 #endif
