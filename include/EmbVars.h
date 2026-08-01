@@ -65,6 +65,9 @@ _Static_assert(sizeof(f64) == 8, "sizeof(f64) != 8");
 
 #define MCUCR (*(volatile u8*) 0x55)
 #define GICR (*(volatile u8*) 0x5b)
+#define SPL (*(volatile u8*) 0x5d)
+#define SPH (*(volatile u8*) 0x5e)
+#define SP (*(volatile u8**) 0x5d)
 #define SREG (*(volatile u8*) 0x5f)
 
 #endif
