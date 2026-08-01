@@ -21,16 +21,16 @@ static void Write_URSEL(enum URSEL sel, u8 val) {
 	UCSRC = val;
 }
 
-void USART_Init(u16 baud_rate) {
+void USART_Init(u16 baud_rate, bool txen, bool rxen) {
 	/* Set baud rate */
 	Write_URSEL(SEL_UBRRH, baud_rate >> 8);
 	UBRRL = baud_rate;
 
 	/* Set TXEN and RXEN. */
-	UCSRB |= bit(UCSRB_TXEN) | bit(UCSRB_RXEN);
+	UCSRB |= (txen ? bit(UCSRB_TXEN) : 0) | (rxen ? bit(UCSRB_RXEN) : 0);
 
-	/* 8-bit character size, 2 stop bits. */
-	Write_URSEL(SEL_UCSRC, 0b0111);
+	/* 8-bit character size, 1 stop bit. */
+	Write_URSEL(SEL_UCSRC, bit(UCSRC_UCSZ0) | bit(UCSRC_UCSZ1));
 }
 
 void USART_Write(u16 len, u8 *buf) {
