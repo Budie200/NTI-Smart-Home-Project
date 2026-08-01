@@ -54,6 +54,7 @@ void LCD_String(const LCD_Config *lcd, const u8* letters){
 
 void LCD_Clear(const LCD_Config *lcd){
 	LCD_SendCommand(lcd, LCD_CMD_CLEARSCREEN);
+	Delay_ms(2);
 }
 
 const u8 *LCD_s64_to_str(s64 val) {
