@@ -47,8 +47,6 @@ void Doorbell_Interrupt_Init(void) {
     set_bit(GICR, 6);
 
     Intr_Register(INTR_VEC_INT0, Doorbell_ISR);
-
-    set_bit(SREG, 7);
 }
 
 int main(void){
@@ -63,11 +61,11 @@ int main(void){
 	KPD_Init();
 	Buzzer_Init();
 	Timer_Init();
-	Menu_init(&lcd);
-
 	Doorbell_Interrupt_Init();
 
-	while(1){
+	set_bit(SREG, SREG_INTREN);
+	Menu_init(&lcd);
 
+	while(1) {
 	}
 }
