@@ -69,5 +69,6 @@ _Static_assert(sizeof(f64) == 8, "sizeof(f64) != 8");
 #define SPH (*(volatile u8*) 0x5e)
 #define SP (*(volatile u8**) 0x5d)
 #define SREG (*(volatile u8*) 0x5f)
+#define SREG_INTREN	7
 
 #endif
