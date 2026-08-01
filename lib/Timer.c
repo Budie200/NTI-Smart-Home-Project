@@ -19,7 +19,7 @@ INTR_FUNC(func){
 
 void Timer_init(void){
     TCCR0 = bit(TCCR0_CS00) | bit(TCCR0_CS02);
-    TIMSK = bit(TIFR_T0VO);
+    TIMSK = bit(TIMSK_TOIE0);
     TCNT0 = 11;
     Intr_Register(INTR_VEC_TIMER0_OVF, func);
 }

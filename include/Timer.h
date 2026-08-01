@@ -15,8 +15,6 @@
 #define TIFR_T0VO 0
 
 void Timer_init(void);
-u32 Timer_Count(void);
-
-extern u32 seconds_passed;
+u32 Timer_GetSeconds(void);
 
 #endif
