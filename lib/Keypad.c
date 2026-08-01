@@ -42,9 +42,9 @@ u8 KPD_GetPressedKey(){
 
 				pressed_key = KPD_Map[row - 4][col];
 
-				while(DIO_GetPinValue(KPD_Port, col) == LOW);
-
-				Delay_ms(10);
+				while(DIO_GetPinValue(KPD_Port, col) == LOW) {
+					Delay_ms(10);
+				}
 			}
 		}
 
