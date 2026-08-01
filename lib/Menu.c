@@ -4,10 +4,16 @@
 #include "Menu.h"
 #include "Timer.h"
 #include "USART.h"
+#include "Buzzer.h"
+#include "Delay.h"
+
+static enum Menu_State{
+    LOOP, MANUAL, AUTOMATIC
+} Menu_State;
 
 void Menu_init(LCD_Config* lcd){
     LCD_String(lcd, (const u8*)"Smart Home Sys");
-	while(Timer_GetSeconds(void) < 2);
+    while(Timer_GetSeconds() < 2);
     LCD_Clear(lcd);
 }
 
@@ -56,7 +62,7 @@ static u8 Check_Password(LCD_Config* lcd){
 void Menu_Password(LCD_Config* lcd){
 u8 attemps = 0;
 for(; attemps < 4; attemps++){
-    if(Check_Password()){
+    if(Check_Password(lcd)){
         LCD_Clear(lcd);
 		LCD_String(lcd, (const u8*)"ACCESS GRANTED");
         break;
@@ -70,9 +76,9 @@ for(; attemps < 4; attemps++){
 }
 if(attemps >= 3){
     LCD_Clear(lcd);
-	LCD_String(lcd, (const u8*)"ACCESS DENIED");
+    LCD_String(lcd, (const u8*)"ACCESS DENIED");
 
-	Buzzer_On();
+    Buzzer_On();
     Delay_ms(200);
     Buzzer_Off();
     
@@ -80,8 +86,8 @@ if(attemps >= 3){
     while(Timer_GetSeconds() < initial_time + 30){
         u8 timer = 30 - (Timer_GetSeconds() - initial_time);
 
-        LCD_Clear();
-        LCD_String(lcd, (const u8*) "Wait: ")
+        LCD_Clear(lcd);
+        LCD_String(lcd, (const u8*) "Wait: ");
         LCD_String(lcd, LCD_s64_to_str(timer));
         Delay_ms(100);
         
@@ -90,8 +96,22 @@ if(attemps >= 3){
 }
 }
 
+static void Menu_Automatic(LCD_Config *lcd) {
+	LCD_Clear(lcd);
+
+	LCD_String(lcd, "Auto!!!");
+	for(;;);
+}
+
+static void Menu_Manual(LCD_Config *lcd) {
+	LCD_Clear(lcd);
+
+	LCD_String(lcd, "Manuall!!!");
+	for(;;);
+}
+
 void Menu_Loop(LCD_Config* lcd){
-    LCD_Clear();
+    LCD_Clear(lcd);
     LCD_String(lcd, Menu_LoopString);
     Delay_ms(100);
 
