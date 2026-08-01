@@ -18,8 +18,6 @@ static INTR_FUNC_TYPE(Intr_Vectbl[INTR_NVECTORS]) = {
 
 static __attribute__((naked, used, signal, noreturn, section(".vectors")))
 void Intr_Vector(void) {
-	u8 *sp;
-
 	/*
 	 * The vector table.
 	 * This is located at phys 0.
@@ -39,33 +37,10 @@ void Intr_Vector(void) {
 		"call 0f\ncall 0f\ncall 0f\ncall 0f\ncall 0f\n"
 
 		"0:\n"
-
-		/* 0x3d is SPL */
-		"in %A0, 0x3d\n"
-
-		/*
-		 * The call instruction subtracts two from SP.
-		 * Undo this by subtracting -2 (0xfe).
-		 * There's no add instruction for this apparently...
-		 *
-		 * XXX
-		 * There's an edge case here where SPL is 0xff
-		 * so the number would have to be carried to SPH.
-		 *
-		 * ...
-		 *
-		 * Whatever.
-		 */
-		"subi %A0, 0xfe\n"
-
-		"out 0x3d, %A0\n"
-
-		/* 0x3e is SPH */
-		"in %B0, 0x3e"
-		: "=d"(sp)
 	);
 
-	asm ("ijmp" :: "z"(Intr_Vectbl[(*sp - 2) / 2]));
+	SP += 2;
+	asm ("ijmp" :: "z"(Intr_Vectbl[(*SP - 2) / 2]));
 }
 
 void Intr_Register(enum Intr_Vec vec, INTR_FUNC_TYPE(func)) {
