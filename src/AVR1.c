@@ -31,7 +31,6 @@ static const LCD_Config lcd = {
 /*EXTERNAL INTERRUPT& DOORBELL ALERT*/
 static INTR_FUNC(Doorbell_ISR) {
     LCD_Clear(&lcd);
-    LCD_String(&lcd, (const u8*)"DOORBELL RANG!"); // Display Doorbell alert message on LCD
     Buzzer_On();
     Delay_ms(1000);
     Buzzer_Off();
