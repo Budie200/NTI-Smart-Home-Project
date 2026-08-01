@@ -1,7 +1,7 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
-#define BUZZER_Port 3
+#define BUZZER_Port 2
 #define BUZZER_Pin  0
 
 void Buzzer_Init(void);
