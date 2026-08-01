@@ -79,10 +79,8 @@ int main(void){
 	LCD_Init(&lcd);
 	KPD_Init();
 	Buzzer_Init();
-
-	LCD_String(&lcd, (const u8*)"Smart Home Sys");
-	Delay_ms(1500);
-
+	Timer_init(void); 
+	
 	while(1){
 		if(Check_Password()){
 			LCD_Clear(&lcd);
