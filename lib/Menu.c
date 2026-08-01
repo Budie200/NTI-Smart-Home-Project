@@ -69,10 +69,16 @@ for(; attemps < 4; attemps++){
         break;
     }
     else{
-		LCD_Clear(lcd);
-		LCD_String(lcd, (const u8*)"Wrong Password");
-		LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
-		LCD_String(lcd, (const u8*)"Try Again");   
+		for (u32 c, s = Timer_GetSeconds(); (c = Timer_GetSeconds()) - s < 3;) {
+			LCD_Clear(lcd);
+			LCD_String(lcd, (const u8*)"Wrong Password");
+			LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+			LCD_String(lcd, (const u8*)"Try Again (");
+			LCD_String(lcd, LCD_s64_to_str(3 - (c - s)));
+			LCD_Char(lcd, ')');
+
+			Delay_ms(1000);
+		}
     }
 }
 if(attemps >= 3){
