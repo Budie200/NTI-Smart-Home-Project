@@ -5,6 +5,7 @@
 #include "LCD.h"
 #include "Buzzer.h"
 #include "Delay.h"
+#include "Interrupt.h"
 
 /* ---------------------------------------------------------------
    LCD wiring:
@@ -28,6 +29,27 @@ static const LCD_Config lcd = {
 static const u8 correct_password[5] = "1234";
 static u8 entered_password[5];
 static u8 wrong_attempts = 0;
+/*EXTERNAL INTERRUPT& DOORBELL ALERT*/
+static void Doorbell_ISR(void) {
+    LCD_Clear(&lcd);
+    LCD_String(&lcd, (const u8*)"DOORBELL RANG!");// Display Doorbell alert message on LCD
+    Buzzer_On();  
+    Delay_ms(1000); 
+    Buzzer_Off();
+}
+void Doorbell_Interrupt_Init(void) {
+    DIO_SetPinDirection(4, 2, INPUT); // Port D (4), Pin 2 as input with internal Pull-Up Resistor
+    DIO_SetPinValue(4, 2, HIGH); // Enable Internal Pull-Up
+
+    set_bit(MCUCR, 1);
+    clr_bit(MCUCR, 0);
+
+    set_bit(GICR, 6);
+
+    Intr_Register(INTR_VEC_INT0, Doorbell_ISR);
+
+    set_bit(SREG, 7);
+}
 
 /* KPD_GetPressedKey only does ONE scan pass, so we poll it
    until an actual key comes back (not KPD_Unpressed) */
@@ -80,7 +102,10 @@ int main(void){
 	KPD_Init();
 	Buzzer_Init();
 
+	Doorbell_Interrupt_Init();
+
 	LCD_String(&lcd, (const u8*)"Smart Home Sys");
+
 	Delay_ms(1500);
 
 	while(1){
