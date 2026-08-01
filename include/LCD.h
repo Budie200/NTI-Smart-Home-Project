@@ -10,9 +10,9 @@
 /* interface data length (l), display rows (n), and font type (f) */
 #define LCD_CMD_FUNCSET(l, n, f)		(0b00100000 | (((l) ? 1 : 0) << 4) | (((n) ? 1 : 0) << 3) | (((f) ? 1 : 0) << 2))
 /* set CGRAM address in counter */
-#define LCD_CMD_SETCGRAMADDR(a)			(0b01000000 | ((a) & 0x1f))
+#define LCD_CMD_SETCGRAMADDR(a)			(0b01000000 | ((a) & 0x3f))
 /* set DDRAM address in counter */
-#define LCD_CMD_SETDDRAMADDR(a)			(0b10000000 | ((a) & 0x3f))
+#define LCD_CMD_SETDDRAMADDR(a)			(0b10000000 | ((a) & 0x7f))
 
 #define LCD_WIDTH 16
 

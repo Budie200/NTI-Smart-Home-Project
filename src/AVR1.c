@@ -32,7 +32,7 @@ static u8 wrong_attempts = 0;
 /*EXTERNAL INTERRUPT& DOORBELL ALERT*/
 static void Doorbell_ISR(void) {
     LCD_Clear(&lcd);
-    LCD_String(&lcd, (const u8*)"DOORBELL RANG!");// Display Doorbell alert message on LCD
+    LCD_String(&lcd, (const u8*)"DOORBELL RANG!"); // Display Doorbell alert message on LCD
     Buzzer_On();  
     Delay_ms(1000); 
     Buzzer_Off();
@@ -101,7 +101,7 @@ int main(void){
 	LCD_Init(&lcd);
 	KPD_Init();
 	Buzzer_Init();
-
+/* System Initializations & Boot Screen */
 	Doorbell_Interrupt_Init();
 
 	LCD_String(&lcd, (const u8*)"Smart Home Sys");

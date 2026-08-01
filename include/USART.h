@@ -15,9 +15,13 @@
 #define UBRRH_URSEL	7
 
 #define UCSRC	UBRRH /* NB: These share the same address. */
+#define UCSRC_UCPOL	0
+#define UCSRC_UCSZ0	1
+#define UCSRC_UCSZ1	2
+#define UCSRC_UMSEL	6
 #define UCSRC_URSEL	UBRRH_URSEL
 
-void USART_Init(u16 baud_rate);
+void USART_Init(u16 baud_rate, bool txen, bool rxen);
 void USART_Write(u16 len, u8 *buf);
 void USART_Read(u16 len, u8 *buf);
 

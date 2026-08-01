@@ -1,0 +1,14 @@
+#ifndef _USART_COMMANDS_H
+#define _USART_COMMANDS_H
+
+/* Support commands for AVR1 and AVR2. */
+
+enum USART_Commands {
+	USART_CMD_LIGHT_ON,
+	USART_CMD_LIGHT1_OFF,
+	USART_CMD_FAN_ON,
+	USART_CMD_MODE_AUTO,
+	USART_CMD_MODE_MANUAL
+};
+
+#endif
