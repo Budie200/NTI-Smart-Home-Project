@@ -25,7 +25,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [X] DIO: AVR2(LEDs for living room light, bedroom light, and fan); AVR1(buzzer for alarms). /Haneen
 - [ ] LCD: Display temperature, light status, fan status, door status, and system mode. /Tamer
 - [ ] Keypad: Navigate menus, and manually control appliances. /Abdullah
-- [ ] Timers: Use for buzzer timing, LED blinking, periodic sensor sampling, or a software clock. /Abdullah
+- [X] Timers: Use for buzzer timing, LED blinking, periodic sensor sampling, or a software clock. /Abdullah
 - [ ] ADC: Read LM35 temperature sensor and LDR; automatically control fan and light based on thresholds. /Khalifa
 - [ ] UART: Support commands: LIGHT1 ON/OFF, FAN ON/OFF, STATUS, AUTO, MANUAL. /Khalifa 
 
