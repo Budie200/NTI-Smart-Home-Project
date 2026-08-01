@@ -13,7 +13,8 @@ static enum Menu_State{
 
 void Menu_init(LCD_Config* lcd){
     LCD_String(lcd, (const u8*)"Smart Home Sys");
-    while(Timer_GetSeconds() < 2);
+    while(Timer_GetSeconds() < 2)
+	    Delay_us(100); /* So GCC doesn't optimize this out. */
     LCD_Clear(lcd);
 }
 
