@@ -45,6 +45,9 @@ u8 KPD_GetPressedKey(){
 				while(DIO_GetPinValue(KPD_Port, col) == LOW) {
 					Delay_ms(10);
 				}
+
+				DIO_SetPinValue(KPD_Port, row, HIGH);
+				break;
 			}
 		}
 
