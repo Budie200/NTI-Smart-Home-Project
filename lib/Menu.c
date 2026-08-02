@@ -6,6 +6,8 @@
 #include "USART.h"
 #include "Buzzer.h"
 #include "Delay.h"
+#include "USART.h"
+#include "USART_Commands.h"
 
 static enum Menu_State{
     LOOP, MANUAL, AUTOMATIC
@@ -24,6 +26,7 @@ static u8 GetKey_Blocking(void){
 	u8 key;
 	do{
 		key = KPD_GetPressedKey();
+		Delay_ms(20);
 	} while(key == KPD_Unpressed);
 	return key;
 }
@@ -111,18 +114,61 @@ static void Menu_Automatic(LCD_Config *lcd) {
 }
 
 static void Menu_Manual(LCD_Config *lcd) {
+	u8 data;
 	LCD_Clear(lcd);
+	LCD_String(lcd, "1: pwr 2: dir");
 
-	LCD_String(lcd, "Manuall!!!");
-	for(;;);
+	switch (GetKey_Blocking()) {
+	case '1':	
+		goto fan_pwr;
+	case '2':
+		goto fan_dir;
+	default:
+		return (Menu_Manual(lcd));
+	}
+
+fan_pwr:
+	LCD_Clear(lcd);
+	LCD_String(lcd, "1: on");
+	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+	LCD_String(lcd, "2: off");
+	switch (GetKey_Blocking()) {
+	case '1':
+		USART_Write(sizeof(u8),
+		    &(u8){USART_CMD_FAN_ON});
+		break;
+	case '2':
+		USART_Write(sizeof(u8),
+		    &(u8){USART_CMD_FAN_OFF});
+		break;
+	default:
+		goto fan_pwr;
+	}
+
+	return;
+fan_dir:
+	LCD_Clear(lcd);
+	LCD_String(lcd, "1: clockwise");
+	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+	LCD_String(lcd, "2: anticlockwise");
+	switch (GetKey_Blocking()) {
+	case '1':
+		USART_Write(sizeof(u8),
+		    &(u8){USART_CMD_FAN_DIR_L});
+		break;
+	case '2':
+		USART_Write(sizeof(u8),
+		    &(u8){USART_CMD_FAN_DIR_R});
+		break;
+	default:
+		goto fan_dir;
+	}
 }
 
 void Menu_Loop(LCD_Config* lcd){
-    LCD_Clear(lcd);
-    LCD_String(lcd, Menu_LoopString);
     Delay_ms(100);
 
-    u8 pressed = KPD_GetPressedKey();
+    u8 pressed = GetKey_Blocking();
     switch (pressed)
     {
     case '1':
@@ -132,7 +178,7 @@ void Menu_Loop(LCD_Config* lcd){
         Menu_State = AUTOMATIC;
         break;
     default:
-        Menu_State = LOOP;
+        //Menu_State = LOOP;
         break;
 
     }
@@ -140,5 +186,8 @@ void Menu_Loop(LCD_Config* lcd){
     switch(Menu_State){
         case MANUAL: Menu_Manual(lcd); break;
         case AUTOMATIC: Menu_Automatic(lcd); break;
+	default:
+        LCD_Clear(lcd);
+        LCD_String(lcd, Menu_LoopString);
     }
 }

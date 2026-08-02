@@ -8,6 +8,7 @@
 #include "Menu.h"
 #include "Timer.h"
 #include "Interrupt.h"
+#include "USART.h"
 
 /* ---------------------------------------------------------------
    LCD wiring:
@@ -56,6 +57,7 @@ int main(void){
 	DIO_SetPinDirection(LCD_CtrlPort, LCD_RW_Pin, OUTPUT);
 	DIO_SetPinDirection(LCD_CtrlPort, LCD_E_Pin,  OUTPUT);
 
+	USART_Init(10, true, true, false);
 	LCD_Init(&lcd);
 	KPD_Init();
 	Buzzer_Init();
@@ -68,5 +70,6 @@ int main(void){
 	Menu_Password(&lcd);
 	while(1) {
 		Menu_Loop(&lcd);
+		Delay_ms(200);
 	}
 }
