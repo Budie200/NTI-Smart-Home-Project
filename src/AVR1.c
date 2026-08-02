@@ -31,7 +31,6 @@ static const LCD_Config lcd = {
 
 /*EXTERNAL INTERRUPT& DOORBELL ALERT*/
 static INTR_FUNC(Doorbell_ISR) {
-    LCD_Clear(&lcd);
     Buzzer_On();
     Delay_ms(1000);
     Buzzer_Off();
