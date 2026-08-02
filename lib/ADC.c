@@ -7,7 +7,7 @@ void ADC_Init(void){
 	DIO_SetPortDirection(1, 0); // PORTA all input - analog sensors
 	DIO_SetPortValue(1, 0); // no pull-ups on analog pins
 
-	ADMUX = bit(ADMUX_REFS0); // AVCC as voltage reference
+	ADMUX = bit(ADMUX_REFS0) | bit(ADMUX_ADLAR); // AVCC as voltage reference
 
 	ADCSRA = bit(ADCSRA_ADEN) | bit(ADCSRA_ADPS1) | bit(ADCSRA_ADPS0);
 }
@@ -21,6 +21,6 @@ u16 ADC_Read(u8 channel){
 
 s32 ADC_ReadTemperature(void){
 	u16 adc_val = ADC_Read(0);                    // LM35 -> PA0
-	s32 temp_mv = ((s32)adc_val * 5000) / 1024;    // convert to millivolts
+	s32 temp_mv = ((s32)adc_val * 5000ull) / 256;    // convert to millivolts
 	return temp_mv / 10;                           // 10mV per degree C
 }

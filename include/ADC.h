@@ -12,6 +12,7 @@
 #define ADCSRA_ADEN	7
 
 #define ADMUX	(*(volatile u8 *)0x27)
+#define ADMUX_ADLAR	5
 #define ADMUX_REFS0	6
 
 void ADC_Init(void);

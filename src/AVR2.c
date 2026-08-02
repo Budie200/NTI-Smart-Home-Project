@@ -15,6 +15,8 @@
 
 #define LDR_Channel 1
 
+static bool mode_auto;
+
 static INTR_FUNC(rx_rcv) {
 	static struct {
 		enum {
@@ -48,6 +50,16 @@ static INTR_FUNC(rx_rcv) {
 		DIO_SetPinValue(2, 0, HIGH);
 		DIO_SetPinValue(2, 1, LOW);
 		break;
+	case USART_CMD_MODE_AUTO:
+		mode_auto = true;
+		break;
+	case USART_CMD_MODE_MANU:
+		/* Turn everything off. */
+		DIO_SetPortValue(LEDS_Port, LOW);
+		DIO_SetPinValue(2, 0, LOW);
+		DIO_SetPinValue(2, 1, LOW);
+		mode_auto = false;
+		break;
 	}
 }
 
@@ -62,15 +74,25 @@ int main(void){
 
 	set_bit(SREG, SREG_INTREN);
 	while(1){
-		s32 temperature = ADC_ReadTemperature();
-		u16 light_level = ADC_Read(LDR_Channel);
+		s32 temperature;
+		u16 light_level;
 
-		if(temperature > 30)
-			DIO_SetPinValue(LEDS_Port, Fan, HIGH);
-		else
-			DIO_SetPinValue(LEDS_Port, Fan, LOW);
+		if (!mode_auto) {
+			Delay_ms(500);
+			continue;
+		}
 
-		if(light_level < 300)
+		temperature = ADC_ReadTemperature();
+		if(temperature > 30) {
+			DIO_SetPinValue(2, 1, HIGH);
+			DIO_SetPinValue(2, 0, LOW);
+		} else {
+			DIO_SetPinValue(2, 1, LOW);
+			DIO_SetPinValue(2, 0, LOW);
+		}
+
+		light_level = ADC_Read(LDR_Channel);
+		if(light_level < 100)
 			DIO_SetPinValue(LEDS_Port, LivingRoomLight, HIGH);
 		else
 			DIO_SetPinValue(LEDS_Port, LivingRoomLight, LOW);

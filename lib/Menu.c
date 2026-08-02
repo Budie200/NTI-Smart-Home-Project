@@ -107,22 +107,28 @@ if(attemps >= 3){
 }
 
 static void Menu_Automatic(LCD_Config *lcd) {
-	LCD_Clear(lcd);
+	USART_Write(sizeof(u8),
+	    &(u8){USART_CMD_MODE_AUTO});
 
-	LCD_String(lcd, "Auto!!!");
-	for(;;);
+	/* Nothing to show, just go back. */
+	Menu_State = LOOP;
 }
 
 static void Menu_Manual(LCD_Config *lcd) {
 	u8 data;
+
 	LCD_Clear(lcd);
 	LCD_String(lcd, "1: pwr 2: dir");
-
+	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+	LCD_String(lcd, "3: back");
 	switch (GetKey_Blocking()) {
-	case '1':	
+	case '1':
 		goto fan_pwr;
 	case '2':
 		goto fan_dir;
+	case '3':
+		Menu_State = LOOP;
+		return;
 	default:
 		return (Menu_Manual(lcd));
 	}
@@ -172,6 +178,9 @@ void Menu_Loop(LCD_Config* lcd){
     switch (pressed)
     {
     case '1':
+	/* Tell the other AVR we want manual mode. */
+	USART_Write(sizeof(u8),
+	    &(u8){USART_CMD_MODE_MANU});
         Menu_State = MANUAL;
         break;
     case '2':
