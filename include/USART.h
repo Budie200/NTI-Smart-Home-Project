@@ -5,6 +5,7 @@
 #define UCSRB	(*(volatile u8 *)0x2a)
 #define UCSRB_TXEN	3
 #define UCSRB_RXEN	4
+#define UCSRB_RXCIE	7
 
 #define UCSRA	(*(volatile u8 *)0x2b)
 #define UCSRA_UDRE	5
@@ -21,7 +22,7 @@
 #define UCSRC_UMSEL	6
 #define UCSRC_URSEL	UBRRH_URSEL
 
-void USART_Init(u16 baud_rate, bool txen, bool rxen);
+void USART_Init(u16 baud_rate, bool txen, bool rxen, bool rxintr);
 void USART_Write(u16 len, u8 *buf);
 void USART_Read(u16 len, u8 *buf);
 
