@@ -11,7 +11,6 @@
 #define LEDS_Port         3
 #define LivingRoomLight   0
 #define BedroomLight      1
-#define Fan                2
 
 #define LDR_Channel 1
 
@@ -60,6 +59,18 @@ static INTR_FUNC(rx_rcv) {
 		DIO_SetPinValue(2, 1, LOW);
 		mode_auto = false;
 		break;
+	case USART_CMD_LIVING_ON:
+		DIO_SetPinValue(LEDS_Port, LivingRoomLight, HIGH);
+		break;
+	case USART_CMD_LIVING_OFF:
+		DIO_SetPinValue(LEDS_Port, LivingRoomLight, LOW);
+		break;
+	case USART_CMD_BED_ON:
+		DIO_SetPinValue(LEDS_Port, BedroomLight, HIGH);
+		break;
+	case USART_CMD_BED_OFF:
+		DIO_SetPinValue(LEDS_Port, BedroomLight, LOW);
+		break;
 	}
 }
 
@@ -92,10 +103,13 @@ int main(void){
 		}
 
 		light_level = ADC_Read(LDR_Channel);
-		if(light_level < 100)
+		if(light_level < 100) {
 			DIO_SetPinValue(LEDS_Port, LivingRoomLight, HIGH);
-		else
+			DIO_SetPinValue(LEDS_Port, BedroomLight, HIGH);
+		} else {
 			DIO_SetPinValue(LEDS_Port, LivingRoomLight, LOW);
+			DIO_SetPinValue(LEDS_Port, BedroomLight, LOW);
+		}
 
 		Delay_ms(500);
 	}

@@ -120,7 +120,7 @@ static void Menu_Manual(LCD_Config *lcd) {
 	LCD_Clear(lcd);
 	LCD_String(lcd, "1: pwr 2: dir");
 	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
-	LCD_String(lcd, "3: back");
+	LCD_String(lcd, "3: back 4: light");
 	switch (GetKey_Blocking()) {
 	case '1':
 		goto fan_pwr;
@@ -129,6 +129,8 @@ static void Menu_Manual(LCD_Config *lcd) {
 	case '3':
 		Menu_State = LOOP;
 		return;
+	case '4':
+		goto lights;
 	default:
 		return (Menu_Manual(lcd));
 	}
@@ -168,6 +170,48 @@ fan_dir:
 		break;
 	default:
 		goto fan_dir;
+	}
+
+	return;
+lights:
+	enum {
+		LIVINGROOM,
+		BEDROOM
+	} lightselect;
+
+	LCD_Clear(lcd);
+	LCD_String(lcd, "1: living light");
+	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+	LCD_String(lcd, "2: bedroom light");
+	switch (GetKey_Blocking()) {
+	case '1':
+		lightselect = LIVINGROOM;
+		break;
+	case '2':
+		lightselect = BEDROOM;
+		break;
+	default:
+		goto lights;
+	}
+
+lights_onoff:
+	LCD_Clear(lcd);
+	LCD_String(lcd, "1: on");
+	LCD_SendCommand(lcd, LCD_CMD_SETDDRAMADDR(0x40));
+	LCD_String(lcd, "2: off");
+	switch (GetKey_Blocking()) {
+	case '1':
+		USART_Write(sizeof(u8),
+		    &(u8){lightselect == LIVINGROOM ?
+		        USART_CMD_LIVING_ON : USART_CMD_BED_ON});
+		break;
+	case '2':
+		USART_Write(sizeof(u8),
+		    &(u8){lightselect == LIVINGROOM ?
+		        USART_CMD_LIVING_OFF : USART_CMD_BED_OFF});
+		break;
+	default:
+		goto lights_onoff;
 	}
 }
 
