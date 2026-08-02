@@ -40,4 +40,4 @@ Automatic Mode: Fan and lights are controlled automatically according to sensor 
 Three incorrect attempts activate the buzzer and display "ACCESS DENIED". /Haneen
 
 ## Bonus
-- [ ] EEPROM to save password and mode /Khalifa
+- [X] EEPROM to save password and mode /Khalifa

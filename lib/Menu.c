@@ -8,12 +8,33 @@
 #include "Delay.h"
 #include "USART.h"
 #include "USART_Commands.h"
+#include "EEPROM.h"
+
+#define EEPROM_MAGIC	0xbeef
+struct eeprom_data {
+	u16 magic;
+	u8 pass[4];
+};
 
 static enum Menu_State{
     LOOP, MANUAL, AUTOMATIC
 } Menu_State;
 
 void Menu_init(LCD_Config* lcd){
+    struct eeprom_data data;
+
+    EEPROM_Read(0, sizeof(data), (u8 *)&data);
+    if (data.magic != EEPROM_MAGIC) {
+	    data.magic = EEPROM_MAGIC;
+	    data.pass[0] = '1';
+	    data.pass[1] = '2';
+	    data.pass[2] = '3';
+	    data.pass[3] = '4';
+
+	    /* Write the password to the EEPROM if it wasn't there already. */
+	    EEPROM_Write(0, sizeof(data), (u8*)&data);
+    }
+
     LCD_String(lcd, (const u8*)"Smart Home Sys");
     while(Timer_GetSeconds() < 2)
 	    Delay_us(100); /* So GCC doesn't optimize this out. */
@@ -34,11 +55,14 @@ static u8 GetKey_Blocking(void){
 /* Reads 4 digits from the keypad, shows '*' on the LCD for each one,
    returns 1 if it matches the password, 0 otherwise */
 static u8 Check_Password(LCD_Config* lcd){
-    const u8 correct_password[5] = "1234";
-    u8 entered_password[5];
+    struct eeprom_data data;
+    u8 entered_password[5], correct_password[5] = { 0 };
 
 	u8 i = 0;
 	u8 key;
+
+	EEPROM_Read(0, sizeof(data), (u8*)&data);
+	__builtin_memcpy(correct_password, data.pass, sizeof(data.pass));
 
 	LCD_Clear(lcd);
 	LCD_String(lcd, (const u8*)"Enter Password:");
