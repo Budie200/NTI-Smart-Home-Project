@@ -7,7 +7,7 @@ CPU Frequency is built around  a speed of *1 MHZ*
 - [X] Set up repository 
 - [X] Circuit Schematic /everyone
 - [X] Simulation /everyone
-- [ ] 5 Minute Demonstration Video /undecided
+- [X] 5 Minute Demonstration Video /Abdullah & Khalifa
 - [X] Report /everyone 
 - [X] Proof read report /Abdullah
 
